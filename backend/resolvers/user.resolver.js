@@ -2,6 +2,8 @@ import Transaction from "../models/transaction.model.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
+// graphql-passport
+// https://www.npmjs.com/package/graphql-passport
 const userResolver = {
     Mutation: {
         signUp: async (_, { input }, context) => {
