@@ -14,7 +14,7 @@ import { configurePassport } from './passport/passport.config.js';
 
 import passport from 'passport';
 import session from 'express-session';
-import ConnectMongoDBSession, { MongoDBStore } from 'connect-mongodb-session';
+import connectMongo from "connect-mongodb-session";
 
 import dotenv from 'dotenv';
 import { buildContext } from 'graphql-passport';
@@ -27,7 +27,7 @@ configurePassport();
 const app = express();
 const httpServer = http.createServer(app);
 
-const mongoDBStore = ConnectMongoDBSession(session);
+const MongoDBStore = connectMongo(session);
 
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URI,
@@ -61,7 +61,7 @@ const server = new ApolloServer({
 await server.start();
 
 app.use(
-    '/',
+    '/graphql',
     cors({
       origin: "http://localhost:3000",
       credentials: true,
@@ -79,4 +79,4 @@ await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 
 await connectDB();
 
-console.log(`🚀 Server ready at http://localhost:4000/`);
+console.log(`🚀 Server ready at http://localhost:4000/graphql`);
